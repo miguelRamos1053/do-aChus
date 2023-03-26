@@ -517,7 +517,6 @@ public class detallesMesa extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        btnVerMesa = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLTotal = new javax.swing.JLabel();
@@ -581,15 +580,25 @@ public class detallesMesa extends javax.swing.JFrame {
                 "CODIGO", "PRODUCTO", "CANTIDAD", "SUB TOTAL"
             }
         ));
-        tableCarrito.setFocusable(false);
         tableCarrito.setRowHeight(25);
         tableCarrito.setSelectionBackground(new java.awt.Color(64, 52, 28));
         tableCarrito.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tableCarrito.setShowHorizontalLines(true);
         tableCarrito.getTableHeader().setReorderingAllowed(false);
+        tableCarrito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tableCarritoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tableCarritoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tableCarritoKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCarrito);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 370, 180));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 380, 240));
 
         txtBuscarProducto.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         txtBuscarProducto.setForeground(new java.awt.Color(153, 153, 153));
@@ -601,7 +610,15 @@ public class detallesMesa extends javax.swing.JFrame {
                 txtBuscarProductoMousePressed(evt);
             }
         });
-        jPanel1.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 110, -1));
+        txtBuscarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarProductoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarProductoKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 110, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/anadir.png"))); // NOI18N
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -615,7 +632,7 @@ public class detallesMesa extends javax.swing.JFrame {
                 jLabel7KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, -1, 40));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, 40));
 
         btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -627,24 +644,12 @@ public class detallesMesa extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 80, 30));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 110, -1));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, 80, 30));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 110, -1));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, -1, -1));
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 20, 390));
-
-        btnVerMesa.setBackground(new java.awt.Color(204, 153, 0));
-        btnVerMesa.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        btnVerMesa.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerMesa.setText("GUARDAR");
-        btnVerMesa.setBorder(null);
-        btnVerMesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerMesaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnVerMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 160, 50));
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
@@ -788,12 +793,6 @@ public class detallesMesa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnVerMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMesaActionPerformed
-        // TODO add your handling code here:
-        actualizarVenta(idVenta, modelo);
-
-    }//GEN-LAST:event_btnVerMesaActionPerformed
-
     private void jLabel7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel7KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7KeyPressed
@@ -853,6 +852,61 @@ public class detallesMesa extends javax.swing.JFrame {
         
     }//GEN-LAST:event_comboBoxTipoPagoMouseClicked
 
+    private void txtBuscarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyTyped
+        // TODO add your handling code here:
+           char tecla = evt.getKeyChar();
+        
+        if(tecla == KeyEvent.VK_ENTER){
+                        if(txtBuscarProducto.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+                 }else{
+                     String codigoProducto = txtBuscarProducto.getText();
+                     txtBuscarProducto.setText("");
+
+                     //--- Verdadeero = ya se añadio este produto 
+                     if(bucarRepetido(modelo,codigoProducto)){
+
+                          JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
+                     }else{
+                         buscarProducto(codigoProducto);
+                     }
+
+                 } 
+                                //ACTUALIZAR VENTA BASE DE DATOSSSSS
+
+                        actualizarVenta(idVenta, modelo);
+        }
+        
+         
+
+    }//GEN-LAST:event_txtBuscarProductoKeyTyped
+
+    private void tableCarritoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCarritoKeyReleased
+         char tecla = evt.getKeyChar();
+        if(tecla == KeyEvent.VK_ENTER){
+            
+            
+                       //ACTUALIZAR VENTA BASE DE DATOSSSSS
+
+                        actualizarVenta(idVenta, modelo);
+        }
+        
+        
+
+    }//GEN-LAST:event_tableCarritoKeyReleased
+
+    private void tableCarritoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCarritoKeyTyped
+
+    }//GEN-LAST:event_tableCarritoKeyTyped
+
+    private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarProductoKeyReleased
+
+    private void tableCarritoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCarritoKeyPressed
+
+    }//GEN-LAST:event_tableCarritoKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -891,7 +945,6 @@ public class detallesMesa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFinalizarVenta;
-    private javax.swing.JButton btnVerMesa;
     private javax.swing.JComboBox<String> comboBoxTipoPago;
     private javax.swing.JLabel jLTotal;
     private javax.swing.JLabel jLabel1;

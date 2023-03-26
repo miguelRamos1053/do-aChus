@@ -473,6 +473,12 @@ public class indexCliente extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, 40));
 
+        jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jScrollPane1KeyReleased(evt);
+            }
+        });
+
         tableCarrito.setBorder(null);
         tableCarrito.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         tableCarrito.setModel(new javax.swing.table.DefaultTableModel(
@@ -720,6 +726,11 @@ public class indexCliente extends javax.swing.JFrame {
                     }
         }
     }//GEN-LAST:event_tablaMesaKeyTyped
+
+    private void jScrollPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyReleased
+        // TODO add your handling code here:
+        System.out.println("estripe tecla en jtable");
+    }//GEN-LAST:event_jScrollPane1KeyReleased
 
     /**
      * @param args the command line arguments

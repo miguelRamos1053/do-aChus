@@ -413,6 +413,9 @@ public class indexCliente extends javax.swing.JFrame {
         jLabel2.setBorder(null);
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -504,8 +507,8 @@ public class indexCliente extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Centro de Ventas");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+        jLabel8.setText("CENTRO DE VENTAS");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
 
         btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -572,42 +575,6 @@ public class indexCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBuscarProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarProductoMousePressed
-        // TODO add your handling code here:
-        if(txtBuscarProducto.getText().equals("CODIGO")){
-            txtBuscarProducto.setText("");
-            txtBuscarProducto.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtBuscarProductoMousePressed
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        if(txtBuscarProducto.getText().equals("")){
-           JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
-        }else{
-            String codigoProducto = txtBuscarProducto.getText();
-            txtBuscarProducto.setText("");
-            
-            //--- Verdadeero = ya se añadio este produto 
-            if(bucarRepetido(modelo,codigoProducto)){
-
-                 JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
-            }else{
-                buscarProducto(codigoProducto);
-            }
-
-        }        
-        
-    }//GEN-LAST:event_jLabel7MouseClicked
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int fila = tableCarrito.getSelectedRow();
-        if (fila>=0) {
-            modelo.removeRow(fila);
-        }else{
-            JOptionPane.showMessageDialog(null, "Debes seleccionar un producto");
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private boolean bucarRepetido(DefaultTableModel modelo, String codigoProducto){
         int numFilas = modelo.getRowCount();
         if(numFilas==0){
@@ -625,37 +592,6 @@ public class indexCliente extends javax.swing.JFrame {
     }
     
     
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      if(validarVenta()){
-          if(insertarVenta()){
-              insertarProductosVenta();
-              mostrarMesasActivas();
-              txtMesa.setText("");
-              
-              inicializarTablaVentas();
-
-          }
-      }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void tablaMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMesaMouseClicked
-        // TODO add your handling code here:
-        int filaSeleccionada = tablaMesa.rowAtPoint((evt.getPoint()));
-        
-         mesaSeleccionada = tablaMesa.getValueAt(filaSeleccionada,0).toString();
-        System.out.println(mesaSeleccionada);
-        
-         int fila = tablaMesa.getSelectedRow();
-        if (fila>=0) {
-            detallesMesa dMesa = new detallesMesa();
-            dMesa.setVisible(true);
-            this.dispose();
-            dMesa.mesaSeleccionada(mesaSeleccionada);
-        }else{
-            JOptionPane.showMessageDialog(null, "Debes seleccionar una mesa");
-        }
-    }//GEN-LAST:event_tablaMesaMouseClicked
-
     private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
         jLabel2.setOpaque(true);
@@ -684,53 +620,128 @@ public class indexCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabel3MouseExited
 
-    private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProductoActionPerformed
-
-    private void txtBuscarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyTyped
-        // TODO add your handling code here:
-        
-        char tecla = evt.getKeyChar();
-        
-        if(tecla == KeyEvent.VK_ENTER){
-               if(txtBuscarProducto.getText().equals("")){
-           JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
-        }else{
-            String codigoProducto = txtBuscarProducto.getText();
-            txtBuscarProducto.setText("");
-            
-            //--- Verdadeero = ya se añadio este produto 
-            if(bucarRepetido(modelo,codigoProducto)){
-
-                 JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
-            }else{
-                buscarProducto(codigoProducto);
-            }
-
-        } 
-        }
-    }//GEN-LAST:event_txtBuscarProductoKeyTyped
-
     private void tablaMesaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaMesaKeyTyped
         char tecla = evt.getKeyChar();
         if(tecla == KeyEvent.VK_ENTER){
-                     int fila = tablaMesa.getSelectedRow();
-                    if (fila>=0) {
-                        detallesMesa dMesa = new detallesMesa();
-                        dMesa.setVisible(true);
-                        this.dispose();
-                        dMesa.mesaSeleccionada(mesaSeleccionada);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Debes seleccionar una mesa");
-                    }
+            int fila = tablaMesa.getSelectedRow();
+            if (fila>=0) {
+                detallesMesa dMesa = new detallesMesa();
+                dMesa.setVisible(true);
+                this.dispose();
+                dMesa.mesaSeleccionada(mesaSeleccionada);
+            }else{
+                JOptionPane.showMessageDialog(null, "Debes seleccionar una mesa");
+            }
         }
     }//GEN-LAST:event_tablaMesaKeyTyped
+
+    private void tablaMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMesaMouseClicked
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaMesa.rowAtPoint((evt.getPoint()));
+
+        mesaSeleccionada = tablaMesa.getValueAt(filaSeleccionada,0).toString();
+        System.out.println(mesaSeleccionada);
+
+        int fila = tablaMesa.getSelectedRow();
+        if (fila>=0) {
+            detallesMesa dMesa = new detallesMesa();
+            dMesa.setVisible(true);
+            this.dispose();
+            dMesa.mesaSeleccionada(mesaSeleccionada);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una mesa");
+        }
+    }//GEN-LAST:event_tablaMesaMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(validarVenta()){
+            if(insertarVenta()){
+                insertarProductosVenta();
+                mostrarMesasActivas();
+                txtMesa.setText("");
+
+                inicializarTablaVentas();
+
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = tableCarrito.getSelectedRow();
+        if (fila>=0) {
+            modelo.removeRow(fila);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debes seleccionar un producto");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jScrollPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyReleased
         // TODO add your handling code here:
         System.out.println("estripe tecla en jtable");
     }//GEN-LAST:event_jScrollPane1KeyReleased
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        if(txtBuscarProducto.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+        }else{
+            String codigoProducto = txtBuscarProducto.getText();
+            txtBuscarProducto.setText("");
+
+            //--- Verdadeero = ya se añadio este produto
+            if(bucarRepetido(modelo,codigoProducto)){
+
+                JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
+            }else{
+                buscarProducto(codigoProducto);
+            }
+
+        }
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void txtBuscarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyTyped
+        // TODO add your handling code here:
+
+        char tecla = evt.getKeyChar();
+
+        if(tecla == KeyEvent.VK_ENTER){
+            if(txtBuscarProducto.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+            }else{
+                String codigoProducto = txtBuscarProducto.getText();
+                txtBuscarProducto.setText("");
+
+                //--- Verdadeero = ya se añadio este produto
+                if(bucarRepetido(modelo,codigoProducto)){
+
+                    JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
+                }else{
+                    buscarProducto(codigoProducto);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_txtBuscarProductoKeyTyped
+
+    private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarProductoActionPerformed
+
+    private void txtBuscarProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarProductoMousePressed
+        // TODO add your handling code here:
+        if(txtBuscarProducto.getText().equals("CODIGO")){
+            txtBuscarProducto.setText("");
+            txtBuscarProducto.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtBuscarProductoMousePressed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        
+        inventarioCliente inventarioC = new inventarioCliente();
+            inventarioC.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

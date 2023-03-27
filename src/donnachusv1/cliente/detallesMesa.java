@@ -832,15 +832,14 @@ public class detallesMesa extends javax.swing.JFrame {
                     float total = Float.parseFloat(jLTotal.getText());
                     float cambio = Float.parseFloat(txtCambio.getText());
                     mostrarCambio(total,cambio,icon);
-                    indexCliente iCliente = new indexCliente();
-                    iCliente.setVisible(true);
-                    this.dispose();
+                   
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "¡Se finalizo la venta conrrectamente! \n No tienes que devolver nada","FIN VENTA",JOptionPane.PLAIN_MESSAGE,icon);
-                    indexCliente iCliente = new indexCliente();
+                    
+                }
+                indexCliente iCliente = new indexCliente();
                     iCliente.setVisible(true);
                     this.dispose();
-                }
                 
             }
         }

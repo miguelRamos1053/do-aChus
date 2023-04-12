@@ -41,7 +41,9 @@ public class indexCliente extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null);
         num(txtMesa);  //Impedir STRING en txtField
-        num(txtBuscarProducto);  //Impedir STRING en txtField
+        num(txtBuscarProducto);  //Impedir STRING en txtFiel
+        num(txtCantidadProducto);
+        
 
         
         mostrarMesasActivas();
@@ -80,7 +82,7 @@ public class indexCliente extends javax.swing.JFrame {
          modelo.addColumn("CANTIDAD");
          this.tableCarrito.setModel(modelo);
     }
-    public void buscarProducto(String codigoProducto){
+    public void buscarProducto(String codigoProducto, String cantidadProducto){
          String[] registros = new String[4];
          String SQL = "SELECT * FROM producto where codigo = "+codigoProducto;
 
@@ -93,7 +95,7 @@ public class indexCliente extends javax.swing.JFrame {
                 registros[0]=rs.getString("codigo");
                 registros[1]=rs.getString("nombre");
                 registros[2]=rs.getString("peso");
-                registros[3]="1";
+                registros[3]=cantidadProducto;
                 modelo.addRow(registros);
              }
         } catch (Exception e) {
@@ -371,6 +373,10 @@ public class indexCliente extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaMesa = new javax.swing.JTable();
+        jSeparator2 = new javax.swing.JSeparator();
+        txtCantidadProducto = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -444,7 +450,7 @@ public class indexCliente extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtBuscarProducto.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtBuscarProducto.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         txtBuscarProducto.setForeground(new java.awt.Color(153, 153, 153));
         txtBuscarProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtBuscarProducto.setToolTipText("");
@@ -464,8 +470,8 @@ public class indexCliente extends javax.swing.JFrame {
                 txtBuscarProductoKeyTyped(evt);
             }
         });
-        jPanel2.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 110, -1));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 110, -1));
+        jPanel2.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 90, -1));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 90, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/anadir.png"))); // NOI18N
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -474,7 +480,7 @@ public class indexCliente extends javax.swing.JFrame {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, 40));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 30, 40));
 
         jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -503,7 +509,7 @@ public class indexCliente extends javax.swing.JFrame {
         tableCarrito.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tableCarrito);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 370, 180));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 370, 160));
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -520,15 +526,15 @@ public class indexCliente extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 80, 30));
+        jPanel2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 80, 30));
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Numero Mesa: ");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, -1, 30));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, -1, 30));
 
         txtMesa.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jPanel2.add(txtMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 30, -1));
+        jPanel2.add(txtMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, 30, -1));
 
         btnGuardar.setBackground(new java.awt.Color(0, 153, 0));
         btnGuardar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -539,7 +545,7 @@ public class indexCliente extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 80, 30));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 80, 30));
 
         tablaMesa.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         tablaMesa.setModel(new javax.swing.table.DefaultTableModel(
@@ -568,7 +574,40 @@ public class indexCliente extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaMesa);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 100, 330));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 100, 300));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 90, -1));
+
+        txtCantidadProducto.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtCantidadProducto.setForeground(new java.awt.Color(153, 153, 153));
+        txtCantidadProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCantidadProducto.setToolTipText("");
+        txtCantidadProducto.setBorder(null);
+        txtCantidadProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtCantidadProductoMousePressed(evt);
+            }
+        });
+        txtCantidadProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadProductoActionPerformed(evt);
+            }
+        });
+        txtCantidadProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadProductoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtCantidadProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 90, -1));
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Cantidad:");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, 40));
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Codigo:");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 670, 490));
 
@@ -682,18 +721,26 @@ public class indexCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1KeyReleased
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        String cantidadProducto = "1";
         if(txtBuscarProducto.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
         }else{
             String codigoProducto = txtBuscarProducto.getText();
+           
+           if(!txtCantidadProducto.getText().equals("")){
+               cantidadProducto = txtCantidadProducto.getText();
+           }
+                
+            
             txtBuscarProducto.setText("");
+            txtCantidadProducto.setText("");
 
             //--- Verdadeero = ya se añadio este produto
             if(bucarRepetido(modelo,codigoProducto)){
 
                 JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
             }else{
-                buscarProducto(codigoProducto);
+                buscarProducto(codigoProducto,cantidadProducto);
             }
 
         }
@@ -703,20 +750,24 @@ public class indexCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         char tecla = evt.getKeyChar();
-
+        String cantidadProducto = "1";
         if(tecla == KeyEvent.VK_ENTER){
             if(txtBuscarProducto.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
             }else{
                 String codigoProducto = txtBuscarProducto.getText();
+                 if(!txtCantidadProducto.getText().equals("")){
+               cantidadProducto = txtCantidadProducto.getText();
+           }
                 txtBuscarProducto.setText("");
+                txtCantidadProducto.setText("");
 
                 //--- Verdadeero = ya se añadio este produto
                 if(bucarRepetido(modelo,codigoProducto)){
 
                     JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
                 }else{
-                    buscarProducto(codigoProducto);
+                    buscarProducto(codigoProducto,cantidadProducto);
                 }
 
             }
@@ -742,6 +793,40 @@ public class indexCliente extends javax.swing.JFrame {
             inventarioC.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void txtCantidadProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCantidadProductoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadProductoMousePressed
+
+    private void txtCantidadProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadProductoActionPerformed
+
+    private void txtCantidadProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadProductoKeyTyped
+        char tecla = evt.getKeyChar();
+        String cantidadProducto = "1";
+        if(tecla == KeyEvent.VK_ENTER){
+            if(txtBuscarProducto.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+            }else{
+                String codigoProducto = txtBuscarProducto.getText();
+                 if(!txtCantidadProducto.getText().equals("")){
+               cantidadProducto = txtCantidadProducto.getText();
+           }
+                txtBuscarProducto.setText("");
+                txtCantidadProducto.setText("");
+
+                //--- Verdadeero = ya se añadio este produto
+                if(bucarRepetido(modelo,codigoProducto)){
+
+                    JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
+                }else{
+                    buscarProducto(codigoProducto,cantidadProducto);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_txtCantidadProductoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -782,6 +867,8 @@ public class indexCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -795,10 +882,12 @@ public class indexCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel jlbPrincipal;
     private javax.swing.JTable tablaMesa;
     private javax.swing.JTable tableCarrito;
     private javax.swing.JTextField txtBuscarProducto;
+    private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtMesa;
     // End of variables declaration//GEN-END:variables
 }

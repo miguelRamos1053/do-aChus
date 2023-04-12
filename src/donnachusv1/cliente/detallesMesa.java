@@ -174,7 +174,7 @@ public class detallesMesa extends javax.swing.JFrame {
         jLTotal.setText(total);
     }
     
-    public void buscarProducto(String codigoProducto){
+    public void buscarProducto(String codigoProducto, String cantidadProducto){
          String[] registros = new String[4];
          String SQL = "SELECT * FROM producto where codigo = "+codigoProducto;
 
@@ -187,7 +187,7 @@ public class detallesMesa extends javax.swing.JFrame {
              while(rs.next()){
                 registros[0]=rs.getString("codigo");
                 registros[1]=rs.getString("nombre");
-                registros[2]="1";
+                registros[2]=cantidadProducto;
                 registros[3]=rs.getString("precio");
                 modelo.addRow(registros);
              }
@@ -530,6 +530,10 @@ public class detallesMesa extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         txtCambio = new javax.swing.JTextField();
         btnFinalizarVenta = new javax.swing.JButton();
+        txtCantidadProducto = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -600,7 +604,7 @@ public class detallesMesa extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 380, 240));
 
-        txtBuscarProducto.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtBuscarProducto.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         txtBuscarProducto.setForeground(new java.awt.Color(153, 153, 153));
         txtBuscarProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtBuscarProducto.setToolTipText("");
@@ -618,7 +622,7 @@ public class detallesMesa extends javax.swing.JFrame {
                 txtBuscarProductoKeyTyped(evt);
             }
         });
-        jPanel1.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 110, -1));
+        jPanel1.add(txtBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 90, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/anadir.png"))); // NOI18N
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -632,7 +636,7 @@ public class detallesMesa extends javax.swing.JFrame {
                 jLabel7KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, 40));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, 40));
 
         btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -645,7 +649,7 @@ public class detallesMesa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, 80, 30));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 110, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 90, -1));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, -1, -1));
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -724,6 +728,39 @@ public class detallesMesa extends javax.swing.JFrame {
         });
         jPanel1.add(btnFinalizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 200, 50));
 
+        txtCantidadProducto.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtCantidadProducto.setForeground(new java.awt.Color(153, 153, 153));
+        txtCantidadProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCantidadProducto.setToolTipText("");
+        txtCantidadProducto.setBorder(null);
+        txtCantidadProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtCantidadProductoMousePressed(evt);
+            }
+        });
+        txtCantidadProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadProductoActionPerformed(evt);
+            }
+        });
+        txtCantidadProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadProductoKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtCantidadProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 90, -1));
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Codigo:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, 40));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 90, -1));
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Cantidad:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, 40));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 550));
 
         pack();
@@ -745,18 +782,26 @@ public class detallesMesa extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         
-        
+        String cantidadProducto = "1";
        if(txtBuscarProducto.getText().equals("")){
            JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
         }else{
             String codigoProducto = txtBuscarProducto.getText();
+            
+             if(!txtCantidadProducto.getText().equals("")){
+               cantidadProducto = txtCantidadProducto.getText();
+           }
             txtBuscarProducto.setText("");
+                            txtCantidadProducto.setText("");
+
+            
+            
             //--- Verdadeero = ya se añadio este produto 
             if(bucarRepetido(modelo,codigoProducto)){
 
                  JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
             }else{
-                buscarProducto(codigoProducto);
+                buscarProducto(codigoProducto,cantidadProducto);
             }
             
         } 
@@ -829,8 +874,14 @@ public class detallesMesa extends javax.swing.JFrame {
             if(resp == 0){
                 finalizarVenta(idVenta);
                 if(tipoPago.equals("Efectivo")){
+                    
                     float total = Float.parseFloat(jLTotal.getText());
-                    float cambio = Float.parseFloat(txtCambio.getText());
+                    float cambio = 0;
+                    if(txtCambio.getText().equals("")){
+                         cambio = 0;
+                    }else{
+                         cambio = Float.parseFloat(txtCambio.getText());
+                    }
                     mostrarCambio(total,cambio,icon);
                    
                 }else{
@@ -856,18 +907,24 @@ public class detallesMesa extends javax.swing.JFrame {
            char tecla = evt.getKeyChar();
         
         if(tecla == KeyEvent.VK_ENTER){
+            String cantidadProducto = "1";
                         if(txtBuscarProducto.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
                  }else{
                      String codigoProducto = txtBuscarProducto.getText();
+                        if(!txtCantidadProducto.getText().equals("")){
+                            cantidadProducto = txtCantidadProducto.getText();
+                        }
                      txtBuscarProducto.setText("");
+                                     txtCantidadProducto.setText("");
+
 
                      //--- Verdadeero = ya se añadio este produto 
                      if(bucarRepetido(modelo,codigoProducto)){
 
                           JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
                      }else{
-                         buscarProducto(codigoProducto);
+                         buscarProducto(codigoProducto,cantidadProducto);
                      }
 
                  } 
@@ -905,6 +962,40 @@ public class detallesMesa extends javax.swing.JFrame {
     private void tableCarritoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCarritoKeyPressed
 
     }//GEN-LAST:event_tableCarritoKeyPressed
+
+    private void txtCantidadProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCantidadProductoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadProductoMousePressed
+
+    private void txtCantidadProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadProductoActionPerformed
+
+    private void txtCantidadProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadProductoKeyTyped
+        char tecla = evt.getKeyChar();
+        String cantidadProducto = "1";
+        if(tecla == KeyEvent.VK_ENTER){
+            if(txtBuscarProducto.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+            }else{
+                String codigoProducto = txtBuscarProducto.getText();
+                if(!txtCantidadProducto.getText().equals("")){
+                    cantidadProducto = txtCantidadProducto.getText();
+                }
+                txtBuscarProducto.setText("");
+                txtCantidadProducto.setText("");
+
+                //--- Verdadeero = ya se añadio este produto
+                if(bucarRepetido(modelo,codigoProducto)){
+
+                    JOptionPane.showMessageDialog(null, "Ya añadiste este producto");
+                }else{
+                    buscarProducto(codigoProducto,cantidadProducto);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_txtCantidadProductoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -949,6 +1040,8 @@ public class detallesMesa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -965,9 +1058,11 @@ public class detallesMesa extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblAtras;
     private javax.swing.JTable tableCarrito;
     private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JTextField txtCambio;
+    private javax.swing.JTextField txtCantidadProducto;
     // End of variables declaration//GEN-END:variables
 }

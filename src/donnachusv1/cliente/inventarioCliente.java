@@ -7,11 +7,18 @@ package donnachusv1.cliente;
 import conexionSQL.conexionSQL;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,13 +34,19 @@ public class inventarioCliente extends javax.swing.JFrame {
     conexionSQL cc = new conexionSQL();
     Connection con = cc.conexion();
     
-
+    DefaultTableModel modelo;
     public inventarioCliente() {
         initComponents();
         
         this.setLocationRelativeTo(null);
         
+        
         llenarTablaInventario();
+        
+          num(txtCantidad);
+          num(txtBuscarProducto);
+          num(txtLote);
+        jTextField2.setEnabled(false);
 
     }
 
@@ -46,16 +59,17 @@ public class inventarioCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        jlbPrincipal = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jlbPrincipal1 = new javax.swing.JLabel();
-        jlbPrincipal = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -63,28 +77,57 @@ public class inventarioCliente extends javax.swing.JFrame {
         txtBuscarProducto = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLTotal = new javax.swing.JLabel();
+        jLNombre = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInventario = new javax.swing.JTable();
-        jLTotal1 = new javax.swing.JLabel();
+        jLCodigo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        txtBuscarProducto1 = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        txtBuscarProducto2 = new javax.swing.JTextField();
+        txtLote = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jDVencimiento = new com.toedter.calendar.JDateChooser();
+        jLabel19 = new javax.swing.JLabel();
+
+        jTextField1.setText("jTextField1");
+
+        jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(114, 140, 69));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jlbPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/principal1.png"))); // NOI18N
+        jlbPrincipal.setBorder(null);
+        jlbPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jlbPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbPrincipalMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlbPrincipalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlbPrincipalMouseExited(evt);
+            }
+        });
+        jPanel1.add(jlbPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 160, 90));
+
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Ventas");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 100, -1));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 3, 14)); // NOI18N
@@ -99,12 +142,6 @@ public class inventarioCliente extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Cuadre");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 60, -1));
-
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Ventas");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 100, -1));
 
         jLabel8.setBackground(new java.awt.Color(0, 0, 0));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -142,31 +179,7 @@ public class inventarioCliente extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 160, 110));
 
-        jlbPrincipal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPrincipal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/principal1.png"))); // NOI18N
-        jlbPrincipal1.setBorder(null);
-        jlbPrincipal1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jlbPrincipal1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlbPrincipal1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jlbPrincipal1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jlbPrincipal1MouseExited(evt);
-            }
-        });
-        jPanel1.add(jlbPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 160, 100));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 490));
-
-        jlbPrincipal.setBackground(new java.awt.Color(114, 140, 69));
-        jlbPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/principal1.png"))); // NOI18N
-        jlbPrincipal.setBorder(null);
-        jlbPrincipal.setOpaque(true);
-        getContentPane().add(jlbPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 160, 90));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/cuadre.png"))); // NOI18N
@@ -220,17 +233,17 @@ public class inventarioCliente extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Nombre");
+        jLabel12.setText("Nombre:");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
 
-        jLTotal.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        jLTotal.setForeground(new java.awt.Color(0, 0, 0));
-        jLTotal.setText("Manzana desidratada");
-        jPanel2.add(jLTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, 50));
+        jLNombre.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLNombre.setForeground(new java.awt.Color(0, 0, 0));
+        jLNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(jLNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 250, 50));
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Codigo");
+        jLabel13.setText("Codigo:");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
 
         tablaInventario.setBorder(null);
@@ -251,6 +264,11 @@ public class inventarioCliente extends javax.swing.JFrame {
         tablaInventario.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tablaInventario.setShowHorizontalLines(true);
         tablaInventario.getTableHeader().setReorderingAllowed(false);
+        tablaInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInventarioMouseClicked(evt);
+            }
+        });
         tablaInventario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tablaInventarioKeyPressed(evt);
@@ -266,66 +284,65 @@ public class inventarioCliente extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 310, 390));
 
-        jLTotal1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLTotal1.setForeground(new java.awt.Color(0, 0, 0));
-        jLTotal1.setText("0000");
-        jPanel2.add(jLTotal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, 50));
+        jLCodigo.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLCodigo.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(jLCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 70, 50));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 60, -1));
 
-        txtBuscarProducto1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        txtBuscarProducto1.setForeground(new java.awt.Color(0, 0, 0));
-        txtBuscarProducto1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtBuscarProducto1.setToolTipText("");
-        txtBuscarProducto1.setBorder(null);
-        txtBuscarProducto1.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtCantidad.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtCantidad.setForeground(new java.awt.Color(0, 0, 0));
+        txtCantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCantidad.setToolTipText("");
+        txtCantidad.setBorder(null);
+        txtCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtBuscarProducto1MousePressed(evt);
+                txtCantidadMousePressed(evt);
             }
         });
-        txtBuscarProducto1.addActionListener(new java.awt.event.ActionListener() {
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarProducto1ActionPerformed(evt);
+                txtCantidadActionPerformed(evt);
             }
         });
-        txtBuscarProducto1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarProducto1KeyTyped(evt);
+                txtCantidadKeyTyped(evt);
             }
         });
-        jPanel2.add(txtBuscarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 60, -1));
+        jPanel2.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 60, -1));
 
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Fecha Vencimiento :");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 60, -1));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 130, -1));
 
-        txtBuscarProducto2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        txtBuscarProducto2.setForeground(new java.awt.Color(153, 153, 153));
-        txtBuscarProducto2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtBuscarProducto2.setToolTipText("");
-        txtBuscarProducto2.setBorder(null);
-        txtBuscarProducto2.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtLote.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtLote.setForeground(new java.awt.Color(153, 153, 153));
+        txtLote.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtLote.setToolTipText("");
+        txtLote.setBorder(null);
+        txtLote.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtBuscarProducto2MousePressed(evt);
+                txtLoteMousePressed(evt);
             }
         });
-        txtBuscarProducto2.addActionListener(new java.awt.event.ActionListener() {
+        txtLote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarProducto2ActionPerformed(evt);
+                txtLoteActionPerformed(evt);
             }
         });
-        txtBuscarProducto2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtLote.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarProducto2KeyTyped(evt);
+                txtLoteKeyTyped(evt);
             }
         });
-        jPanel2.add(txtBuscarProducto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 60, -1));
+        jPanel2.add(txtLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 130, -1));
 
         jLabel15.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 51, 255));
         jLabel15.setText("(*)");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, 40));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, 40));
 
         btnGuardar.setBackground(new java.awt.Color(51, 153, 0));
         btnGuardar.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
@@ -346,15 +363,27 @@ public class inventarioCliente extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 51, 255));
         jLabel17.setText("(*)");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, 40));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 20, 40));
 
         jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 51, 255));
         jLabel18.setText("(*)");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, -1, 40));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, -1, 50));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/donnachusv1/imgs/buscar.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 30, 50));
+        jPanel2.add(jDVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 200, -1));
+
+        jLabel19.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 51, 255));
+        jLabel19.setText("(*)");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 660, 490));
 
@@ -371,7 +400,7 @@ public class inventarioCliente extends javax.swing.JFrame {
         tablaInventario.setRowHeight(25);
         
          String[] titulos={"CODIGO","NOMBRE","CANTIDAD"};
-         DefaultTableModel modelo = new DefaultTableModel(null, titulos){
+          modelo = new DefaultTableModel(null, titulos){
              @Override
              public boolean isCellEditable(int fila, int columnas){
                  if(columnas == 3){
@@ -406,6 +435,155 @@ public class inventarioCliente extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null, "Error al cargar PRODUCTOS en la tabla "+e.getMessage());
         }
 
+    }
+    public void seleccionarProducto(String codigo){
+        
+          String SQL = "SELECT * FROM producto WHERE codigo = "+codigo;
+
+         try {
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(SQL);
+
+             while(rs.next()){
+                jLCodigo.setText(rs.getString("CODIGO"));
+                jLNombre.setText(rs.getString("NOMBRE"));
+             }
+             this.tablaInventario.setModel(modelo);
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Error al cargar el producto seleccionado "+e.getMessage());
+        }
+    }
+    
+    public boolean validarFormulario(){
+        boolean FormValido = true;
+        try{
+            Date fecha =  jDVencimiento.getDate();    
+            long d = fecha.getTime();
+            java.sql.Date fechaSQL = new java.sql.Date(d);
+            System.out.println(fechaSQL);
+            
+           
+            
+        }catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Se debe seleccionar la fecha de vencimiento");
+            FormValido = false;
+        }
+        
+        if((txtLote.getText().equals(""))){
+            FormValido = false;
+            JOptionPane.showMessageDialog(null, "Digite el numero del lote");
+        }
+        
+        if(jLNombre.getText().equals("")){
+            FormValido = false;
+            JOptionPane.showMessageDialog(null, "¿A que producto vas a ponerle ese inventario?");
+        }
+        
+        try{
+         int cant = Integer.parseInt(txtCantidad.getText());
+         if(cant <1){
+               FormValido = false;
+               JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0");
+         }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0");
+            txtCantidad.setText("");
+            FormValido = false;
+        }
+        
+
+        
+        
+        
+        return FormValido;
+    }
+     private void num(JTextField a){
+            a.addKeyListener (new KeyAdapter() {
+               public void keyTyped (KeyEvent e) {
+                      char c = e.getKeyChar ();
+                      if(!Character.isDigit(c) && c != '.'){
+                             e.consume() ;
+                 }
+                if(c == '.' && jTextField2.getText().contains(".")){
+                         e .consume () ;
+                }
+           }
+                    });
+    }
+     
+     public void sumarInventario(String codigoProducto, int cantProducto){
+         try {
+            String SQL = "UPDATE producto SET cantidad=cantidad+? WHERE codigo=?";
+            
+            PreparedStatement pst = con.prepareStatement(SQL);
+
+            pst.setInt(1,cantProducto);
+            pst.setString(2,codigoProducto);
+
+     
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al finalizar venta"+e.getMessage());
+        }
+         
+     }
+     public void crearRegistroInventario(){
+         //id	cantidad	fecha	idProducto	lote	fechaVencimiento
+         int cantidad = Integer.parseInt(txtCantidad.getText());
+         
+    
+  
+        
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); //formato de fecha
+        String fechaVencimiento = formato.format(jDVencimiento.getDate());
+        
+        SimpleDateFormat formatoFechaActual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //formato de fecha
+        java.util.Date fechaActual = new Date();
+        String fechaAcualFormat = formatoFechaActual.format(fechaActual);
+        
+        int idProducto = buscarIdProducto(jLCodigo.getText());
+        
+        String lote = txtLote.getText();
+        
+        try {
+            String SQL = "INSERT INTO historialinventario(cantidad,fecha,idProducto,lote,fechaVencimiento) values(?,?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(SQL);
+
+            pst.setInt(1, cantidad);
+            pst.setString(2, fechaAcualFormat);
+            pst.setInt(3, idProducto);     
+            pst.setString(4, lote); 
+            pst.setString(5,fechaVencimiento);
+            
+            pst.execute();
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "Error al crear InventarioRegistro "+e.getMessage());
+        }
+         
+        
+         
+
+     }
+     public int buscarIdProducto(String codigoProducto){
+         int idProducto = 0;
+         String SQL = "SELECT * FROM producto where codigo = "+codigoProducto;
+
+         
+         try {
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(SQL);
+             
+             
+             while(rs.next()){
+                idProducto = rs.getInt("id");
+             }
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Error al cargar el id del producto "+e.getMessage());
+        }
+         
+         return idProducto;
     }
     
 
@@ -447,26 +625,6 @@ public class inventarioCliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel9MouseExited
 
-    private void jlbPrincipal1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipal1MouseEntered
-        jlbPrincipal1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
-        jlbPrincipal1.setOpaque(true);
-        
-        
-    }//GEN-LAST:event_jlbPrincipal1MouseEntered
-
-    private void jlbPrincipal1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipal1MouseExited
-        // TODO add your handling code here:
-        jlbPrincipal1.setBorder(null);
-        jlbPrincipal1.setOpaque(false);
-    }//GEN-LAST:event_jlbPrincipal1MouseExited
-
-    private void jlbPrincipal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipal1MouseClicked
-        // TODO add your handling code here:
-          indexCliente iCliente = new indexCliente();
-        iCliente.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jlbPrincipal1MouseClicked
-
     private void txtBuscarProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarProductoMousePressed
         // TODO add your handling code here:
         if(txtBuscarProducto.getText().equals("CODIGO")){
@@ -490,6 +648,8 @@ public class inventarioCliente extends javax.swing.JFrame {
             }else{
                 String codigoProducto = txtBuscarProducto.getText();
                 txtBuscarProducto.setText("");
+                
+                seleccionarProducto(codigoProducto);
 
                
 
@@ -512,37 +672,108 @@ public class inventarioCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaInventarioKeyReleased
 
     private void tablaInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaInventarioKeyTyped
-
+       
     }//GEN-LAST:event_tablaInventarioKeyTyped
 
-    private void txtBuscarProducto1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarProducto1MousePressed
+    private void txtCantidadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCantidadMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto1MousePressed
+    }//GEN-LAST:event_txtCantidadMousePressed
 
-    private void txtBuscarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProducto1ActionPerformed
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto1ActionPerformed
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
-    private void txtBuscarProducto1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProducto1KeyTyped
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto1KeyTyped
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
-    private void txtBuscarProducto2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarProducto2MousePressed
+    private void txtLoteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoteMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto2MousePressed
+    }//GEN-LAST:event_txtLoteMousePressed
 
-    private void txtBuscarProducto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProducto2ActionPerformed
+    private void txtLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto2ActionPerformed
+    }//GEN-LAST:event_txtLoteActionPerformed
 
-    private void txtBuscarProducto2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProducto2KeyTyped
+    private void txtLoteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoteKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarProducto2KeyTyped
+    }//GEN-LAST:event_txtLoteKeyTyped
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-     
+    
+        if(validarFormulario()){
+            int cantProducto = Integer.parseInt(txtCantidad.getText());
+            String codigoProducto = jLCodigo.getText();
+            sumarInventario(codigoProducto,cantProducto);
+            
+            crearRegistroInventario();
+            
+            
+            llenarTablaInventario();
+            
+            
+            
+            jLCodigo.setText("");
+            jLNombre.setText("");
+            txtCantidad.setText("");
+            jDVencimiento.setDate(null);
+            txtLote.setText("");
+        }
+        
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tablaInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInventarioMouseClicked
+        // TODO add your handling code here:
+         int filaSeleccionada = tablaInventario.rowAtPoint((evt.getPoint()));
+
+        String codigoSeleccionado = tablaInventario.getValueAt(filaSeleccionada,0).toString();
+        System.out.println(codigoSeleccionado);
+        
+        seleccionarProducto(codigoSeleccionado);
+        
+        //restablecer formulario
+            txtCantidad.setText("");
+            jDVencimiento.setDate(null);
+            txtLote.setText("");
+    }//GEN-LAST:event_tablaInventarioMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+
+      
+            if(txtBuscarProducto.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Digite el codigo del producto");
+            }else{
+                String codigoProducto = txtBuscarProducto.getText();
+                txtBuscarProducto.setText("");
+                
+                seleccionarProducto(codigoProducto);
+
+            //restablecer formulario
+            txtCantidad.setText("");
+            jDVencimiento.setDate(null);
+            txtLote.setText("");
+
+            }
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jlbPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipalMouseClicked
+        indexCliente iClente = new indexCliente();
+            iClente.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jlbPrincipalMouseClicked
+
+    private void jlbPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipalMouseEntered
+         jlbPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        jlbPrincipal.setOpaque(true);
+    }//GEN-LAST:event_jlbPrincipalMouseEntered
+
+    private void jlbPrincipalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPrincipalMouseExited
+        jlbPrincipal.setBorder(null);
+        jlbPrincipal.setOpaque(false);
+    }//GEN-LAST:event_jlbPrincipalMouseExited
 
     /**
      * @param args the command line arguments
@@ -581,8 +812,9 @@ public class inventarioCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JLabel jLTotal;
-    private javax.swing.JLabel jLTotal1;
+    private com.toedter.calendar.JDateChooser jDVencimiento;
+    private javax.swing.JLabel jLCodigo;
+    private javax.swing.JLabel jLNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -593,6 +825,7 @@ public class inventarioCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -607,11 +840,12 @@ public class inventarioCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel jlbPrincipal;
-    private javax.swing.JLabel jlbPrincipal1;
     private javax.swing.JTable tablaInventario;
     private javax.swing.JTextField txtBuscarProducto;
-    private javax.swing.JTextField txtBuscarProducto1;
-    private javax.swing.JTextField txtBuscarProducto2;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtLote;
     // End of variables declaration//GEN-END:variables
 }
